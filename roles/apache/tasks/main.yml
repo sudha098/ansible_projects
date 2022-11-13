@@ -1,0 +1,21 @@
+---
+# tasks file for apache
+- yum:
+    name: httpd
+    state: present
+- service:
+    name: httpd
+    state: started
+    enable: yes
+- service:
+    name: firewalld
+    state: started
+    enable: yes
+- firewalld:
+     service: http
+     state: enabled
+     permanent: yes
+     immediate: yes
+- template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
