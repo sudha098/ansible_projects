@@ -1,0 +1,13 @@
+---
+ - name: generate hosts file
+   hosts: all
+   tasks:
+    - template:
+        src: hosts.j2
+        dest: /etc/myhosts
+ - name:  delete file from all except dev group
+   hosts: all, !dev
+   tasks:
+     - file:
+         path: /etc/myhosts
+         state: absent
