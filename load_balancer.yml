@@ -1,0 +1,9 @@
+---
+ - name: setup load balancer
+   hosts: balancers
+   roles:
+     - balancer
+ - name: setup php site
+   hosts: prod
+   roles:
+     - phphello

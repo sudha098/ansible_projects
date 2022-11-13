@@ -1,0 +1,32 @@
+---
+ - name: create lvm partition based on condition
+   hosts: all
+   tasks:
+     - name: check if vg is present
+       debug:
+         msg: "VG is not present"
+       when: ansible_facts.lvm.vgs.myvg is not defined
+
+     - name: create lvm partition
+       lvol:
+         vg: myvg
+         lv: mylv
+         size: 1500m
+       when: ansible_facts.lvm.vgs.myvg.free_g >= "1.6"
+
+     - name: check if requested size is present or not
+       debug:
+         msg: "Requested size is not available"
+       when: ansible_facts.lvm.vgs.myvg.free_g < "1.6"
+
+     - name: create lvm partition of 800m
+       lvol:
+         vg: myvg
+         lv: mylv
+         size: 800m
+       when: ansible_facts.lvm.vgs.myvg.free_g < "1.6"
+     - name: format lvm partition
+       filesystem:
+         device: /dev/myvg/mylv
+         type: ext4
+        

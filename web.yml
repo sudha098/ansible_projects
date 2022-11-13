@@ -1,0 +1,24 @@
+---
+ - name: setup directory
+   hosts: dev
+   tasks:
+     - name: create dir
+       file:
+         group: apache
+         state: directory
+         mode: '2775'
+         path: /webdev
+     - name: create link
+       file:
+         src: /webdev
+         dest: /var/www/html/webdev
+         state: link
+         force: yes
+     - name: create file
+       lineinfile:
+         create: yes
+         line: "Development"
+         path: /webdev/index.html
+         setype: httpd_sys_content_t
+
+
