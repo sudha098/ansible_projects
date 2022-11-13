@@ -1,0 +1,9 @@
+user:
+  - name: sudha
+    job: DevOps
+  - name: py
+    job: Manager
+  - name: paul
+    job: DevOps
+  - name: john
+    job: Manager

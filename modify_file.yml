@@ -1,0 +1,19 @@
+---
+ - name:  modify file for dev
+   hosts: dev
+   tasks:
+     - copy:
+         dest: /etc/myhosts
+         content: "Development"
+ - name:  modify file for dev
+   hosts: test
+   tasks:
+     - copy:
+         dest: /etc/myhosts
+         content: "Testing"
+ - name:  modify file for dev
+   hosts: prod
+   tasks:
+     - copy:
+         dest: /etc/myhosts
+         content: "Production"

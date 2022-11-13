@@ -1,0 +1,36 @@
+---
+ - name: create user on dev and test
+   hosts: dev,test
+   vars_files:
+     - vault.yml
+     - user_list.yml
+   tasks:
+     - name: create group
+       group:
+         name: devops
+         state: present
+     - name: create user 
+       user:
+         name: "{{ item.name }}"
+         password: "{{ dev_pass | password_hash('sha512') }}"
+         groups: devops
+       when: item.job == DevOps
+       loop: "{{ user }}"
+
+ - name: create user on prod
+   hosts: prod
+   vars_files:
+     - vault.yml
+     - user_list.yml
+   tasks:
+     - name: create group
+       group:
+         name: manager
+         state: present
+     - name: create user 
+       user:
+         name: "{{ item.name }}"
+         password: "{{ mgr_pass | password_hash('sha512') }}"
+         groups: manager
+       when: item.job == Manager
+       loop: "{{ user }}"
