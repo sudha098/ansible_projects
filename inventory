@@ -1,0 +1,16 @@
+[dev]
+serverA
+
+[test]
+serverB
+
+[prod]
+serverC
+serverD
+
+[balancers]
+serverE
+
+[webservers:children]
+prod
+
